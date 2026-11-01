@@ -1,0 +1,13 @@
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  b:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install pyinstaller
+      - run: pyinstaller --onefile --noconsole --name BL2MapEditor BL2MapEditor.py
+      - uses: actions/upload-artifact@v4
+        with: {name: BL2MapEditor, path: dist/BL2MapEditor.exe}
